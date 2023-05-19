@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Загрузка данных{% endblock %}
+{% block head %}
+    <script src="{% static "scripts/create_championship.js" %}"></script>
+{% endblock %}
+{% block content %}
+    <div class="vh-100 d-flex justify-content-center align-items-center">
+      <div class="row d-flex justify-content-center">
+        <div class="border border-3 border-primary"></div>
+        <div class="card bg-white">
+          <div class="card-body p-5">
+            <h1 class="fw-bold mb-2">Загрузка данных</h1>
+            <form method="post" enctype="multipart/form-data">
+              {% csrf_token %}
+              <div class="form-outline mb-3">
+                <label for="{{ form.name.id_for_label }}" class="form-label">Название чемпионата:</label>
+                {{ form.name }}
+              </div>
+              <div class="form-outline mb-3">
+                <label for="{{ form.registration_file.id_for_label }}" class="form-label">Данные регистрации:</label>
+                {{ form.registration_file }}
+              </div>
+              <div class="form-outline mb-3 form-check">
+                <input type="checkbox" id="show-result-upload" name="show-result-upload" class="form-check-input">
+                <label for="show-result-upload" class="form-check-label">Есть данные результатов</label>
+              </div>
+              <div class="form-outline mb-3 d-none">
+                <label for="{{ form.results_file.id_for_label }}" class="form-label">Данные результатов:</label>
+                {{ form.results_file }}
+              </div>
+              <button type="submit" class="btn btn-primary btn-block">Сохранить чемпионат</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+{% endblock %}
+
+{% block scripts %}
+    <script>
+        let checkbox = document.getElementById('show-result-upload');
+        let results_file_field = document.getElementById('{{ form.results_file.id_for_label }}');
+        checkbox.addEventListener('change', function() {
+            if (this.checked) {
+                results_file_field.parentNode.classList.remove('d-none');
+            } else {
+                results_file_field.parentNode.classList.add('d-none');
+            }
+        });
+    </script>
+{% endblock %}
