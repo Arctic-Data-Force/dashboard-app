@@ -4,5 +4,15 @@
 
 {% block content %}
     <a href="./championships/create/">Загрузить данные</a>
+
+
+  <h1>Чемпионаты:</h1>
+  <ul>
+    {% for championship in championships %}
+      <li><a href="./championships/{{ championship.id }}">{{ championship.name }}</a></li>
+    {% empty %}
+      <li>Чемпионаты не найдены.</li>
+    {% endfor %}
+  </ul>
 {% endblock %}
 
